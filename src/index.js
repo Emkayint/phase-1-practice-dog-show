@@ -25,7 +25,31 @@ function getNamesFromDb(){
             tr.appendChild(tdSex)
             tr.appendChild(tdBtn)
             tables.appendChild(tr)
-            console.log(elem)
+
+            btn.addEventListener('click', ()=> {
+                let myForm = document.querySelector('form')
+                myForm.addEventListener('submit', (e) => {
+                    e.preventDefault()
+
+                    let nameToUpdate = document.getElementById('name')
+                    let breedToUpdate = document.getElementById('breed')
+                    let sexToUpdate = document.getElementById('sex')
+                    let url = "http://localhost:3000/dogs/"
+                    fetch(`${url}${elem.id}`, {
+                        method : "PATCH",
+                        headers : {
+                            "Content-type" : "application/json",
+                            Accept : 'application/json'
+                        },
+                        body : JSON.stringify({
+                            name : nameToUpdate.value,
+                            breed : breedToUpdate.value,
+                            sex : sexToUpdate.value
+                        })
+                    })
+                    .then(data => console.log(data))
+                })
+            })
         })
     })
 }
